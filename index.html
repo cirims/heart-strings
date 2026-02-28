@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knitting Romance - 8-Bit Adventure</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- GAME WORLD -->
+        <div id="game-world" class="screen active">
+            <div id="game-map">
+                <!-- 20x15 tile map will be generated here -->
+            </div>
+            <div id="game-entities">
+                <div id="player" class="entity player-sprite" data-x="5" data-y="7" data-facing="right"></div>
+                <div id="girl" class="entity girl-sprite" data-x="10" data-y="7" data-facing="right"></div>
+            </div>
+            <div id="interaction-prompt" class="hidden">
+                <p>Press SPACE to talk</p>
+            </div>
+        </div>
+
+        <!-- DIALOGUE OVERLAY -->
+        <div id="dialogue-overlay" class="overlay hidden">
+            <div id="dialogue-box">
+                <div id="dialogue-text">
+                    <p></p>
+                </div>
+                <div id="dialogue-choices">
+                    <!-- Choices will be generated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- KNITTING GRID OVERLAY -->
+        <div id="knitting-overlay" class="overlay hidden">
+            <div id="knitting-container">
+                <h3>Your Pattern</h3>
+                <div id="knitting-grid">
+                    <!-- 16x16 grid will be generated here -->
+                </div>
+                <button id="close-knitting" class="pixel-btn">Close</button>
+            </div>
+        </div>
+
+        <!-- COMPLETION SCREEN -->
+        <div id="completion-screen" class="screen hidden">
+            <div id="final-pattern">
+                <h2>Your Knitting Pattern</h2>
+                <div id="final-grid">
+                    <!-- Final 16x16 pattern -->
+                </div>
+                <div id="pattern-info">
+                    <p id="romance-score">Romance Score: 0%</p>
+                    <p id="pattern-meaning"></p>
+                </div>
+                <button id="restart-btn" class="pixel-btn">Try Again</button>
+            </div>
+        </div>
+
+        <!-- HUD -->
+        <div id="hud">
+            <div id="romance-indicator">
+                <span>❤️</span>
+                <span id="romance-percent">0%</span>
+            </div>
+            <div id="controls-hint">
+                <span>Arrow Keys: Move | Space: Interact | K: View Pattern</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

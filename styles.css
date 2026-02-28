@@ -1,0 +1,592 @@
+/* ─── BITSY AESTHETIC ─── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: #dc143c;
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+/* ─── GAME CONTAINER ─── */
+#game-container {
+    width: 512px;
+    height: 512px;
+    background: #ffb6c1;
+    border: 16px solid #ff69b4;
+    position: relative;
+    overflow: hidden;
+    font-size: 8px;
+    box-shadow: 0 0 0 4px #ff1493;
+}
+
+/* ─── SCREEN SYSTEM ─── */
+.screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    transition: opacity 0.3s ease;
+}
+
+.screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.screen.active {
+    opacity: 1;
+}
+
+/* ─── GAME WORLD ─── */
+#game-world {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#game-map {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(16, 32px);
+    grid-template-rows: repeat(16, 32px);
+}
+
+.tile {
+    width: 32px;
+    height: 32px;
+    border: none;
+    box-sizing: border-box;
+}
+
+.tile.floor {
+    background: #ffc3d5;
+}
+
+.tile.wall {
+    background: #dc143c;
+    border: 1px solid #ffffff5e;
+}
+
+/* Add checker pattern to game container border */
+#game-container {
+    width: 512px;
+    height: 512px;
+    background: #ffb6c1;
+    border: 16px solid #dc143c;
+    position: relative;
+    overflow: hidden;
+    font-size: 8px;
+    box-shadow: 0 0 0 4px #ff69b4;
+    background-image: 
+        repeating-linear-gradient(45deg, 
+            transparent, 
+            transparent 8px, 
+            rgba(255, 182, 193, 0.3) 8px, 
+            rgba(255, 182, 193, 0.3) 16px
+        );
+    background-clip: border-box;
+    background-origin: border-box;
+}
+
+
+/* ─── ENTITIES ─── */
+#game-entities {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.entity {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    transition: left 0.2s steps(4), top 0.2s steps(4);
+    pointer-events: auto;
+    z-index: 10;
+}
+
+.player-sprite {
+    background: transparent;
+    image-rendering: pixelated;
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+
+/* Player sprite using background-image for pixel art */
+.player-sprite::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 64px;
+    height: 64px;
+    background-image: 
+        /* Row 0: Hair */
+        linear-gradient(to right, 
+            transparent 0px, transparent 16px,
+            #8b4513 16px, #8b4513 48px,
+            transparent 48px, transparent 64px
+        ),
+        /* Row 1: Hair */
+        linear-gradient(to right, 
+            transparent 0px, transparent 12px,
+            #8b4513 12px, #8b4513 52px,
+            transparent 52px, transparent 64px
+        ),
+        /* Row 2: Face */
+        linear-gradient(to right, 
+            transparent 0px, transparent 16px,
+            #fdbcb4 16px, #fdbcb4 48px,
+            transparent 48px, transparent 64px
+        ),
+        /* Row 3: Eyes */
+        linear-gradient(to right, 
+            transparent 0px, transparent 20px,
+            #fdbcb4 20px, #fdbcb4 24px,
+            #000 24px, #000 28px,
+            #fdbcb4 28px, #fdbcb4 36px,
+            #000 36px, #000 40px,
+            #fdbcb4 40px, #fdbcb4 44px,
+            transparent 44px, transparent 64px
+        ),
+        /* Row 4: Face */
+        linear-gradient(to right, 
+            transparent 0px, transparent 16px,
+            #fdbcb4 16px, #fdbcb4 48px,
+            transparent 48px, transparent 64px
+        ),
+        /* Row 5: Mouth */
+        linear-gradient(to right, 
+            transparent 0px, transparent 24px,
+            #fdbcb4 24px, #fdbcb4 28px,
+            #ff1493 28px, #ff1493 36px,
+            #fdbcb4 36px, #fdbcb4 40px,
+            transparent 40px, transparent 64px
+        ),
+        /* Row 6: Chin */
+        linear-gradient(to right, 
+            transparent 0px, transparent 20px,
+            #fdbcb4 20px, #fdbcb4 44px,
+            transparent 44px, transparent 64px
+        ),
+        /* Row 7: Neck */
+        linear-gradient(to right, 
+            transparent 0px, transparent 24px,
+            #fdbcb4 24px, #fdbcb4 40px,
+            transparent 40px, transparent 64px
+        ),
+        /* Row 8: Shirt */
+        linear-gradient(to right, 
+            transparent 0px, transparent 20px,
+            #4169e1 20px, #4169e1 44px,
+            transparent 44px, transparent 64px
+        ),
+        /* Row 9: Shirt */
+        linear-gradient(to right, 
+            transparent 0px, transparent 20px,
+            #4169e1 20px, #4169e1 44px,
+            transparent 44px, transparent 64px
+        ),
+        /* Row 10: Shirt */
+        linear-gradient(to right, 
+            transparent 0px, transparent 20px,
+            #4169e1 20px, #4169e1 44px,
+            transparent 44px, transparent 64px
+        ),
+        /* Row 11: Belt */
+        linear-gradient(to right, 
+            transparent 0px, transparent 20px,
+            #000 20px, #000 44px,
+            transparent 44px, transparent 64px
+        ),
+        /* Row 12: Pants */
+        linear-gradient(to right, 
+            transparent 0px, transparent 24px,
+            #4169e1 24px, #4169e1 36px,
+            transparent 36px, transparent 40px,
+            #4169e1 40px, #4169e1 44px,
+            transparent 44px, transparent 64px
+        ),
+        /* Row 13: Pants */
+        linear-gradient(to right, 
+            transparent 0px, transparent 24px,
+            #4169e1 24px, #4169e1 36px,
+            transparent 36px, transparent 40px,
+            #4169e1 40px, #4169e1 44px,
+            transparent 44px, transparent 64px
+        ),
+        /* Row 14: Shoes */
+        linear-gradient(to right, 
+            transparent 0px, transparent 24px,
+            #000 24px, #000 36px,
+            transparent 36px, transparent 40px,
+            #000 40px, #000 44px,
+            transparent 44px, transparent 64px
+        );
+    background-size: 64px 4px;
+    background-position: 0 0, 0 4px, 0 8px, 0 12px, 0 16px, 0 20px, 0 24px, 0 28px, 0 32px, 0 36px, 0 40px, 0 44px, 0 48px, 0 52px, 0 56px;
+    background-repeat: no-repeat;
+}
+
+.girl-sprite {
+    background: transparent;
+    image-rendering: pixelated;
+    position: relative;
+    width: 64px;
+    height: 64px;
+}
+
+/* Girl sprite using background-image for pixel art */
+.girl-sprite::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 64px;
+    height: 64px;
+    background-image: 
+        /* Row 0: Hair */
+        linear-gradient(to right, 
+            transparent 0px, transparent 12px,
+            #8b4513 12px, #8b4513 52px,
+            transparent 52px, transparent 64px
+        ),
+        /* Row 1: Hair */
+        linear-gradient(to right, 
+            transparent 0px, transparent 8px,
+            #8b4513 8px, #8b4513 56px,
+            transparent 56px, transparent 64px
+        ),
+        /* Row 2: Hair */
+        linear-gradient(to right, 
+            transparent 0px, transparent 4px,
+            #8b4513 4px, #8b4513 60px,
+            transparent 60px, transparent 64px
+        ),
+        /* Row 3: Face */
+        linear-gradient(to right, 
+            transparent 0px, transparent 16px,
+            #fdbcb4 16px, #fdbcb4 48px,
+            transparent 48px, transparent 64px
+        ),
+        /* Row 4: Eyes */
+        linear-gradient(to right, 
+            transparent 0px, transparent 20px,
+            #fdbcb4 20px, #fdbcb4 24px,
+            #000 24px, #000 28px,
+            #fdbcb4 28px, #fdbcb4 36px,
+            #000 36px, #000 40px,
+            #fdbcb4 40px, #fdbcb4 44px,
+            transparent 44px, transparent 64px
+        ),
+        /* Row 5: Face */
+        linear-gradient(to right, 
+            transparent 0px, transparent 16px,
+            #fdbcb4 16px, #fdbcb4 48px,
+            transparent 48px, transparent 64px
+        ),
+        /* Row 6: Mouth */
+        linear-gradient(to right, 
+            transparent 0px, transparent 24px,
+            #fdbcb4 24px, #fdbcb4 28px,
+            #ff1493 28px, #ff1493 36px,
+            #fdbcb4 36px, #fdbcb4 40px,
+            transparent 40px, transparent 64px
+        ),
+        /* Row 7: Chin */
+        linear-gradient(to right, 
+            transparent 0px, transparent 20px,
+            #fdbcb4 20px, #fdbcb4 44px,
+            transparent 44px, transparent 64px
+        ),
+        /* Row 8: Neck */
+        linear-gradient(to right, 
+            transparent 0px, transparent 24px,
+            #fdbcb4 24px, #fdbcb4 40px,
+            transparent 40px, transparent 64px
+        ),
+        /* Row 9: Dress */
+        linear-gradient(to right, 
+            transparent 0px, transparent 16px,
+            #ff69b4 16px, #ff69b4 48px,
+            transparent 48px, transparent 64px
+        ),
+        /* Row 10: Dress */
+        linear-gradient(to right, 
+            transparent 0px, transparent 12px,
+            #ff69b4 12px, #ff69b4 52px,
+            transparent 52px, transparent 64px
+        ),
+        /* Row 11: Dress */
+        linear-gradient(to right, 
+            transparent 0px, transparent 12px,
+            #ff69b4 12px, #ff69b4 52px,
+            transparent 52px, transparent 64px
+        ),
+        /* Row 12: Dress */
+        linear-gradient(to right, 
+            transparent 0px, transparent 16px,
+            #ff69b4 16px, #ff69b4 48px,
+            transparent 48px, transparent 64px
+        ),
+        /* Row 13: Legs */
+        linear-gradient(to right, 
+            transparent 0px, transparent 20px,
+            #ffb6c1 20px, #ffb6c1 28px,
+            transparent 28px, transparent 36px,
+            #ffb6c1 36px, #ffb6c1 44px,
+            transparent 44px, transparent 64px
+        ),
+        /* Row 14: Shoes */
+        linear-gradient(to right, 
+            transparent 0px, transparent 20px,
+            #ff1493 20px, #ff1493 28px,
+            transparent 28px, transparent 36px,
+            #ff1493 36px, #ff1493 44px,
+            transparent 44px, transparent 64px
+        );
+    background-size: 64px 4px;
+    background-position: 0 0, 0 4px, 0 8px, 0 12px, 0 16px, 0 20px, 0 24px, 0 28px, 0 32px, 0 36px, 0 40px, 0 44px, 0 48px, 0 52px, 0 56px;
+    background-repeat: no-repeat;
+}
+
+/* ─── INTERACTION PROMPT ─── */
+#interaction-prompt {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    background: #000;
+    color: #fff;
+    padding: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    text-align: center;
+    border: 2px solid #ff69b4;
+}
+
+#interaction-prompt.hidden {
+    display: none;
+}
+
+/* ─── OVERLAYS ─── */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.overlay.hidden {
+    display: none;
+}
+
+/* ─── DIALOGUE SYSTEM ─── */
+.overlay {
+    background: transparent;
+}
+
+#dialogue-box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #000;
+    border-bottom: 4px solid #ff69b4;
+    padding: 12px;
+    font-family: 'Courier New', monospace;
+}
+
+#dialogue-text p {
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+#dialogue-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+/* ─── KNITTING OVERLAY ─── */
+#knitting-container {
+    background: #ffb6c1;
+    border: 8px solid #ff69b4;
+    padding: 20px;
+    text-align: center;
+}
+
+#knitting-container h3 {
+    color: #ff1493;
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+#knitting-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 32px);
+    grid-template-rows: repeat(7, 32px);
+    gap: 1px;
+    background: #ddd;
+    padding: 8px;
+    border: 4px solid #ff1493;
+    margin: 0 auto 16px;
+}
+
+.stitch {
+    background: #ffb6c1;
+    border: none;
+    width: 32px;
+    height: 32px;
+}
+
+.stitch.heart {
+    background: #ff1493;
+}
+
+.stitch.background {
+    background: #fff;
+}
+
+.stitch.empty {
+    background: #fff;
+}
+
+.stitch.missing {
+    background: #fff;
+}
+
+/* ─── HUD ─── */
+#hud {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    display: none;
+    z-index: 50;
+}
+
+/* ─── PIXEL BUTTONS ─── */
+.choice-btn, .pixel-btn {
+    background: transparent;
+    color: #fe1493;
+    border: none;
+    padding: 4px 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    cursor: pointer;
+    transition: none;
+    text-align: left;
+}
+
+.choice-btn:hover, .pixel-btn:hover {
+    color: #ff1493;
+}
+
+.choice-btn:active, .pixel-btn:active {
+    color: #fff;
+}
+
+.choice-btn::before {
+    content: '> ';
+}
+
+/* ─── COMPLETION SCREEN ─── */
+#completion-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#final-pattern {
+    background: #ffb6c1;
+    border: 8px solid #ff69b4;
+    padding: 20px;
+    text-align: center;
+    max-width: 400px;
+}
+
+#final-pattern h2 {
+    margin-bottom: 16px;
+    color: #ff1493;
+    font-size: 16px;
+}
+
+#final-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 32px);
+    grid-template-rows: repeat(7, 32px);
+    gap: 1px;
+    background: #ff6ab4;
+    padding: 8px;
+    border: 4px solid #ff1493;
+    margin: 0 auto 16px;
+}
+
+#pattern-info {
+    margin-bottom: 16px;
+}
+
+#romance-score {
+    font-size: 16px;
+    font-weight: normal;
+    color: #ff1493;
+    margin-bottom: 12px;
+}
+
+#pattern-meaning {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #fe1493;
+}
+
+/* ─── NO ANIMATIONS (Bitsy style) ─── */
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+    #game-screen {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+    }
+    
+    #knitting-grid {
+        max-width: 300px;
+        max-height: 300px;
+    }
+    
+    .character {
+        font-size: 36px;
+    }
+    
+    #final-grid {
+        max-width: 280px;
+        max-height: 280px;
+    }
+}
