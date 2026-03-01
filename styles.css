@@ -154,6 +154,30 @@ body {
     display: flex;
 }
 
+/* ─── GAME TITLE ─── */
+#game-title {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    pointer-events: none;
+}
+
+#game-title h1 {
+    font-size: 24px;
+    color: #ff1493;
+    text-shadow: 2px 2px 0px #fff;
+    margin: 0;
+    animation: title-pulse 3s infinite;
+    text-align: center;
+}
+
+@keyframes title-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.05); opacity: 1; }
+}
+
 #game-map {
     position: absolute;
     top: 0;
