@@ -21,7 +21,7 @@ body {
 
 /* ─── GAME CONTAINER ─── */
 #game-container {
-    width: 512px;
+    width: 640px;
     height: 512px;
     background: #ffb6c1;
     border: 16px solid #ff69b4;
@@ -151,17 +151,170 @@ body {
     position: relative;
     width: 100%;
     height: 100%;
+    display: flex;
 }
 
 #game-map {
     position: absolute;
     top: 0;
     left: 0;
+    width: 512px;
+    height: 512px;
+}
+
+/* ─── SIDE INSTRUCTIONS ─── */
+#side-instructions {
+    width: 128px;
+    height: 512px;
+    background: rgba(255, 255, 255, 0.9);
+    border-left: 4px solid #ff1493;
+    padding: 10px;
+    font-size: 9px;
+    color: #333;
+    overflow-y: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#side-instructions h3 {
+    color: #ff1493;
+    margin-bottom: 10px;
+    font-size: 12px;
+    text-align: center;
+}
+
+.side-controls {
+    margin-bottom: 15px;
+}
+
+.control-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    padding: 4px;
+    background: rgba(255, 105, 180, 0.1);
+    border-radius: 4px;
+}
+
+.control-item .key {
+    background: #ff1493;
+    color: white;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 8px;
+    min-width: 30px;
+    text-align: center;
+    margin-right: 6px;
+}
+
+.control-item .desc {
+    flex: 1;
+    line-height: 1.2;
+}
+
+.side-tip {
+    background: rgba(255, 20, 147, 0.2);
+    padding: 8px;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 8px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+}
+
+.small-btn {
+    font-size: 10px;
+    padding: 6px 12px;
+    background: #ff1493;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
     width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: repeat(16, 32px);
-    grid-template-rows: repeat(16, 32px);
+}
+
+.small-btn:hover {
+    background: #dc143c;
+    transform: scale(1.05);
+}
+
+/* ─── FULL INSTRUCTIONS OVERLAY ─── */
+#full-instructions-overlay {
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+#full-instructions-content {
+    background: #ffb6c1;
+    border: 4px solid #ff1493;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px;
+    max-height: 400px;
+    overflow-y: auto;
+    color: #333;
+}
+
+#full-instructions-content h2 {
+    color: #ff1493;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 20px;
+}
+
+#full-game-instructions .instruction-section {
+    margin-bottom: 15px;
+}
+
+#full-game-instructions .instruction-section h3 {
+    color: #dc143c;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#full-game-instructions .instruction-section p {
+    margin-bottom: 8px;
+    line-height: 1.3;
+    font-size: 11px;
+}
+
+#full-game-instructions .instruction-section ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#full-game-instructions .instruction-section li {
+    margin-bottom: 4px;
+    padding-left: 15px;
+    position: relative;
+    font-size: 10px;
+}
+
+#full-game-instructions .instruction-section li:before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: #ff1493;
+}
+
+#close-instructions-btn {
+    display: block;
+    margin: 15px auto 0;
+    font-size: 12px;
+    padding: 8px 16px;
+    background: #ff1493;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#close-instructions-btn:hover {
+    background: #dc143c;
+    transform: scale(1.1);
 }
 
 .tile {
@@ -182,14 +335,6 @@ body {
 
 /* Add checker pattern to game container border */
 #game-container {
-    width: 512px;
-    height: 512px;
-    background: #ffb6c1;
-    border: 16px solid #dc143c;
-    position: relative;
-    overflow: hidden;
-    font-size: 8px;
-    box-shadow: 0 0 0 4px #ff69b4;
     background-image: 
         repeating-linear-gradient(45deg, 
             transparent, 

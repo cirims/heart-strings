@@ -8,12 +8,52 @@
 </head>
 <body>
     <div id="game-container">
-        <!-- WELCOME SCREEN -->
-        <div id="welcome-screen" class="screen active">
-            <div id="welcome-content">
-                <h1>Heart Strings</h1>
-                <div id="game-instructions">
-                    <h2>How to Play</h2>
+        <!-- GAME WORLD -->
+        <div id="game-world" class="screen active">
+            <div id="game-map">
+                <!-- 20x15 tile map will be generated here -->
+            </div>
+            <div id="game-entities">
+                <div id="player" class="entity player-sprite" data-x="5" data-y="7" data-facing="right"></div>
+                <div id="girl" class="entity girl-sprite" data-x="10" data-y="7" data-facing="right"></div>
+            </div>
+            <div id="interaction-prompt" class="hidden">
+                <p>Press SPACE to talk</p>
+            </div>
+            
+            <!-- SIDE INSTRUCTIONS -->
+            <div id="side-instructions">
+                <h3>🧶 Quick Guide</h3>
+                <div class="side-controls">
+                    <div class="control-item">
+                        <span class="key">↑↓←→</span>
+                        <span class="desc">Wander around</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">SPACE</span>
+                        <span class="desc">Talk to cute yarn person</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">K</span>
+                        <span class="desc">Check heart progress</span>
+                    </div>
+                    <div class="control-item">
+                        <span class="key">ESC</span>
+                        <span class="desc">Escape awkwardly</span>
+                    </div>
+                </div>
+                <div class="side-tip">
+                    <p>💕 Choose romantic options to fill your heart!</p>
+                </div>
+                <button id="full-instructions-btn" class="pixel-btn small-btn">Full Guide</button>
+            </div>
+        </div>
+
+        <!-- FULL INSTRUCTIONS OVERLAY -->
+        <div id="full-instructions-overlay" class="overlay hidden">
+            <div id="full-instructions-content">
+                <h2>Heart Strings - Complete Guide</h2>
+                <div id="full-game-instructions">
                     <div class="instruction-section">
                         <h3>🎯 Your Mission (Should You Choose to Accept It)</h3>
                         <p>You're a knitting enthusiast who just spotted someone cute at the local yarn shop! Your goal: woo them with your charm and knitting skills by making ALL the right choices. Build a complete heart pattern through your smooth (or awkward) conversation skills!</p>
@@ -41,21 +81,7 @@
                         <p>Will you knit your way into their heart? Or end up with a lopsided pattern that screams "I tried"? There's only one way to find out...</p>
                     </div>
                 </div>
-                <button id="start-game-btn" class="pixel-btn">Let's Get Knitting!</button>
-            </div>
-        </div>
-
-        <!-- GAME WORLD -->
-        <div id="game-world" class="screen hidden">
-            <div id="game-map">
-                <!-- 20x15 tile map will be generated here -->
-            </div>
-            <div id="game-entities">
-                <div id="player" class="entity player-sprite" data-x="5" data-y="7" data-facing="right"></div>
-                <div id="girl" class="entity girl-sprite" data-x="10" data-y="7" data-facing="right"></div>
-            </div>
-            <div id="interaction-prompt" class="hidden">
-                <p>Press SPACE to talk</p>
+                <button id="close-instructions-btn" class="pixel-btn">Back to Game</button>
             </div>
         </div>
 

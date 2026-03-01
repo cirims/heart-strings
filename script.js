@@ -160,8 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ─── DOM ELEMENTS ─── */
     const elements = {
-        welcomeScreen: document.getElementById('welcome-screen'),
-        startGameBtn: document.getElementById('start-game-btn'),
         gameMap: document.getElementById('game-map'),
         player: document.getElementById('player'),
         girl: document.getElementById('girl'),
@@ -178,7 +176,10 @@ document.addEventListener('DOMContentLoaded', () => {
         romanceScore: document.getElementById('romance-score'),
         romancePercent: document.getElementById('romance-percent'),
         patternMeaning: document.getElementById('pattern-meaning'),
-        restartBtn: document.getElementById('restart-btn')
+        restartBtn: document.getElementById('restart-btn'),
+        fullInstructionsBtn: document.getElementById('full-instructions-btn'),
+        fullInstructionsOverlay: document.getElementById('full-instructions-overlay'),
+        closeInstructionsBtn: document.getElementById('close-instructions-btn')
     };
 
     /* ─── MAP FUNCTIONS ─── */
@@ -487,22 +488,14 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.completionScreen.classList.remove('active');
     }
 
-    /* ─── START GAME FUNCTION ─── */
-    function startGame() {
-        elements.welcomeScreen.classList.remove('active');
-        elements.welcomeScreen.classList.add('hidden');
-        elements.gameWorld.classList.add('active');
-        elements.gameWorld.classList.remove('hidden');
-        
-        // Initialize game after welcome screen is hidden
-        setTimeout(() => {
-            initializeMap();
-            initializeKnittingGrid();
-            updateEntityPosition(elements.player, gameState.playerX, gameState.playerY, gameState.playerFacing);
-            updateEntityPosition(elements.girl, gameState.girlX, gameState.girlY);
-            elements.romancePercent.textContent = '0%';
-            checkInteraction();
-        }, 300);
+    /* ─── INITIALIZATION ─── */
+    function init() {
+        initializeMap();
+        initializeKnittingGrid();
+        updateEntityPosition(elements.player, gameState.playerX, gameState.playerY, gameState.playerFacing);
+        updateEntityPosition(elements.girl, gameState.girlX, gameState.girlY);
+        elements.romancePercent.textContent = '0%';
+        checkInteraction();
     }
 
     /* ─── KEYBOARD CONTROLS ─── */
@@ -564,6 +557,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     gameState.canMove = true;
                 } else if (!elements.knittingOverlay.classList.contains('hidden')) {
                     elements.knittingOverlay.classList.add('hidden');
+                } else if (!elements.fullInstructionsOverlay.classList.contains('hidden')) {
+                    elements.fullInstructionsOverlay.classList.add('hidden');
+                    gameState.canMove = true;
                 }
                 break;
         }
@@ -575,13 +571,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     elements.restartBtn.addEventListener('click', restartGame);
-    elements.startGameBtn.addEventListener('click', startGame);
-
-    /* ─── INITIALIZATION ─── */
-    function init() {
-        // Don't initialize game immediately - wait for start button
-        // Game will be initialized in startGame() function
-    }
+    
+    // Full instructions event listeners
+    elements.fullInstructionsBtn.addEventListener('click', () => {
+        elements.fullInstructionsOverlay.classList.remove('hidden');
+        gameState.canMove = false;
+    });
+    
+    elements.closeInstructionsBtn.addEventListener('click', () => {
+        elements.fullInstructionsOverlay.classList.add('hidden');
+        gameState.canMove = true;
+    });
 
     // Start the game
     init();
