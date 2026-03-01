@@ -160,6 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ─── DOM ELEMENTS ─── */
     const elements = {
+        welcomeScreen: document.getElementById('welcome-screen'),
+        startGameBtn: document.getElementById('start-game-btn'),
         gameMap: document.getElementById('game-map'),
         player: document.getElementById('player'),
         girl: document.getElementById('girl'),
@@ -485,6 +487,24 @@ document.addEventListener('DOMContentLoaded', () => {
         elements.completionScreen.classList.remove('active');
     }
 
+    /* ─── START GAME FUNCTION ─── */
+    function startGame() {
+        elements.welcomeScreen.classList.remove('active');
+        elements.welcomeScreen.classList.add('hidden');
+        elements.gameWorld.classList.add('active');
+        elements.gameWorld.classList.remove('hidden');
+        
+        // Initialize game after welcome screen is hidden
+        setTimeout(() => {
+            initializeMap();
+            initializeKnittingGrid();
+            updateEntityPosition(elements.player, gameState.playerX, gameState.playerY, gameState.playerFacing);
+            updateEntityPosition(elements.girl, gameState.girlX, gameState.girlY);
+            elements.romancePercent.textContent = '0%';
+            checkInteraction();
+        }, 300);
+    }
+
     /* ─── KEYBOARD CONTROLS ─── */
     document.addEventListener('keydown', (e) => {
         if (gameState.completed) return;
@@ -555,15 +575,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     elements.restartBtn.addEventListener('click', restartGame);
+    elements.startGameBtn.addEventListener('click', startGame);
 
     /* ─── INITIALIZATION ─── */
     function init() {
-        initializeMap();
-        initializeKnittingGrid();
-        updateEntityPosition(elements.player, gameState.playerX, gameState.playerY, gameState.playerFacing);
-        updateEntityPosition(elements.girl, gameState.girlX, gameState.girlY);
-        elements.romancePercent.textContent = '0%';
-        checkInteraction();
+        // Don't initialize game immediately - wait for start button
+        // Game will be initialized in startGame() function
     }
 
     // Start the game
