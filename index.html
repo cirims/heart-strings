@@ -8,8 +8,45 @@
 </head>
 <body>
     <div id="game-container">
+        <!-- WELCOME SCREEN -->
+        <div id="welcome-screen" class="screen active">
+            <div id="welcome-content">
+                <h1>Heart Strings</h1>
+                <div id="game-instructions">
+                    <h2>How to Play</h2>
+                    <div class="instruction-section">
+                        <h3>🎯 Your Mission (Should You Choose to Accept It)</h3>
+                        <p>You're a knitting enthusiast who just spotted someone cute at the local yarn shop! Your goal: woo them with your charm and knitting skills by making ALL the right choices. Build a complete heart pattern through your smooth (or awkward) conversation skills!</p>
+                    </div>
+                    <div class="instruction-section">
+                        <h3>🎮 Button Mashing Guide</h3>
+                        <ul>
+                            <li><strong>Arrow Keys</strong> - Wander around like you're looking for the right yarn color</li>
+                            <li><strong>Space Bar</strong> - Attempt to talk when you're not awkwardly standing too far away</li>
+                            <li><strong>K Key</strong> - Stare at your half-finished heart pattern and question your life choices</li>
+                            <li><strong>Escape</strong> - Panic and exit any conversation like a social ninja</li>
+                        </ul>
+                    </div>
+                    <div class="instruction-section">
+                        <h3>💕 Romance Pro Tips (From a Knitting Guru)</h3>
+                        <ul>
+                            <li>Choose the charmingly romantic options to fill heart squares (obviously)</li>
+                            <li>Complete all 8 conversations without saying something weird</li>
+                            <li>Press 'K' anytime to see if your heart is more "full of love" or "full of regret"</li>
+                            <li>Remember: every wrong choice is just adding character to your pattern!</li>
+                        </ul>
+                    </div>
+                    <div class="instruction-section">
+                        <h3>🧶 The Yarn Truth</h3>
+                        <p>Will you knit your way into their heart? Or end up with a lopsided pattern that screams "I tried"? There's only one way to find out...</p>
+                    </div>
+                </div>
+                <button id="start-game-btn" class="pixel-btn">Let's Get Knitting!</button>
+            </div>
+        </div>
+
         <!-- GAME WORLD -->
-        <div id="game-world" class="screen active">
+        <div id="game-world" class="screen hidden">
             <!-- GAME TITLE -->
             <div id="game-title">
                 <h1>Heart Strings</h1>
